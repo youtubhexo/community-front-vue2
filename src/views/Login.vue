@@ -66,8 +66,8 @@
                 <div class="layui-input-inline">
                   <input type="text" id="L_vercode" name="vercode" required lay-verify="required" placeholder="请回答后面的问题" autocomplete="off" class="layui-input">
                 </div>
-                <div class="layui-form-mid">
-                  <span style="color: #c00;">span</span>
+                <div class="layui-form-mid svg">
+                   <div v-html="svgCaptcha"></div>
                 </div>
               </div>
               <div class="layui-form-item">
@@ -102,8 +102,25 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  name: 'Login'
+  name: 'Login',
+  data () {
+    return {
+      svgCaptcha: ''
+    }
+  },
+  mounted () {
+    axios.get('http://localhost:3000/getCaptcha')
+      .then(response => {
+        this.svgCaptcha = response.data.msg
+      })
+      .catch(error => {
+        console.error(error)
+      })
+  }
+
 }
 </script>
 
@@ -111,6 +128,10 @@ export default {
 
 .logo{
   height: 25px;
+}
+.svg{
+  position: relative;
+  top: -15px;
 }
 
 </style>
