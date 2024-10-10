@@ -70,7 +70,7 @@
                    <div v-html="svgCaptcha"></div>
                 </div>
               </div>
-              <ValidationProvider rules="secret" v-slot="{ errors }">
+              <ValidationProvider rules="required|email" v-slot="{ errors }">
   <input v-model="email" type="text">
   <span>{{ errors[0] }}</span>
 </ValidationProvider>
@@ -107,16 +107,19 @@
 
 <script>
 import axios from 'axios'
-
+import { ValidationProvider } from 'vee-validate'
 export default {
   name: 'Login',
+  components: {
+    ValidationProvider
+  },
   data () {
     return {
       svgCaptcha: ''
     }
   },
   mounted () {
-    axios.get('http://localhost:3000/getCaptcha')
+    axios.get('/getCaptcha')
       .then(response => {
         this.svgCaptcha = response.data.msg
       })

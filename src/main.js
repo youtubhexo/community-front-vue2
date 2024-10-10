@@ -1,15 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { ValidationProvider, extend } from 'vee-validate'
-// Add a rule.
-extend('secret', {
-  validate: value => value === 'example',
-  message: 'This is not the magic word'
-})
 
+import axios from 'axios'
+import '@/utils/veevalidate'
+
+axios.defaults.baseURL = 'http://localhost:3000'
 Vue.config.productionTip = false
-Vue.component('ValidationProvider', ValidationProvider)
 
 new Vue({
   router,
